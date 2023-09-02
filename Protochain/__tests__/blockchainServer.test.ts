@@ -17,6 +17,13 @@ describe('BlockchainServer tests', () => {
         expect(response.body.isValid.success).toEqual(true)
     })
 
+    test('GET /blocks', async () => {
+        const response = await request(app)
+            .get('/blocks/');
+
+        expect(response.status).toEqual(200)
+    })
+
     test('GET /blocks/:index - Should GET genesis', async () => {
         const response = await request(app)
             .get('/blocks/0');
@@ -38,6 +45,14 @@ describe('BlockchainServer tests', () => {
             .get('/blocks/-1');
 
         expect(response.status).toEqual(404)
+    })
+
+    test('GET /blocks/next - Should GET next block info', async () => {
+        const response = await request(app)
+            .get('/blocks/next');
+
+        expect(response.status).toEqual(200)
+        expect(response.body.index).toEqual(1)
     })
 
     test('POST /blocks/ - Should add block', async () => {

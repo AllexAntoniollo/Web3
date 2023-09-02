@@ -5,6 +5,7 @@ import Block from '../src/lib/block'
 jest.mock('../src/lib/block.ts')
 
 describe("Block tests", () => {
+    
 
     test("Should has genesis block", () => {
         const blockchain = new Blockchain();
@@ -45,5 +46,11 @@ describe("Block tests", () => {
         const blockchain = new Blockchain();
         const block = blockchain.getBlock(blockchain.blocks[0].hash)
         expect(block).toBeTruthy();
+    })
+
+    test("Should get next block info", () => {
+        const blockchain = new Blockchain()
+        const info = blockchain.getNextBlock()
+        expect(info.index).toEqual(1)
     })
 })
