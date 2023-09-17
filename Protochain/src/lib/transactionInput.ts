@@ -28,7 +28,7 @@ export default class TransactionInput {
     sign(privateKey : string) : void{
         this.signature = ECPair.fromPrivateKey(Buffer.from(privateKey,"hex"))
             .sign(Buffer.from(this.getHash(),"hex"))
-            .toString()
+            .toString("hex")
     }
     /**
      * Generates the tx input hash

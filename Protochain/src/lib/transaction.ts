@@ -11,18 +11,24 @@ export default class Transaction{
     timestamp: number
     hash : string
     to : string
-    txInput : TransactionInput
+    txInput : TransactionInput | undefined
 
     constructor(tx?:Transaction) {
         this.type = tx?.type || TransactionType.REGULAR
         this.to = tx?.to || ""
         this.timestamp = tx?.timestamp || Date.now()
+        if(tx && tx.txInput){
+            this.txInput = new TransactionInput(tx.txInput)
+        }else{
+            this.txInput = new TransactionInput()
+        }
         this.hash = tx?.hash || this.getHash()
-        this.txInput = new TransactionInput(tx?.txInput) || new TransactionInput()
+
     }
 
     getHash() : string{
-        return SHA256(this.type+this.to+this.timestamp+this.txInput.getHash()).toString()
+        const from = this.txInput ? this.txInput.getHash() : ""
+        return SHA256(this.type+this.to+this.timestamp+from).toString()
     }
 
     isValid() : Validation{
@@ -31,6 +37,12 @@ export default class Transaction{
 
         if(!this.to)
               return new Validation(false,"Invalid to.")
+
+        if(this.txInput){
+            const validation = this.txInput.isValid()
+            if(!validation.success) return new Validation(false,"Invalid tx "+validation.message)
+            
+        }
 
         return new Validation()
     }
