@@ -35,7 +35,7 @@ export default class Blockchain{
     }
 
     getDifficulty() : number{
-        return Math.ceil(this.blocks.length/Blockchain.DIFFICULTY_FACTOR)
+        return Math.ceil(this.blocks.length/Blockchain.DIFFICULTY_FACTOR) + 1
     }
 
     getTransaction(hash:string) : TransactionSearch{
@@ -61,13 +61,19 @@ export default class Blockchain{
     }
 
     addTransaction(transaction : Transaction) : Validation{
+        if(transaction.txInput){
+            const from = transaction.txInput.fromAddress
+            const pendingtx = this.mempool.map(tx => tx.txInput).filter(txi => txi!.fromAddress === from)
+            if(pendingtx && pendingtx.length){
+                return new Validation(false,"This wallet has a pending transaction.")
+            }
+        }
+
         const validation = transaction.isValid()
         if(!validation.success)
             return new Validation(false,"Invalid tx: "+validation.message)
         if(this.blocks.some(b => b.transactions.some(tx => tx.hash === transaction.hash)))
             return new Validation(false,"Duplicated tx in blockchain.")
-        if(this.mempool.some(tx => tx.hash === transaction.hash))
-            return new Validation(false,"Duplicated tx in mempool.")
 
         this.mempool.push(transaction)
         return new Validation(true,transaction.hash)
