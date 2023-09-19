@@ -64,6 +64,14 @@ describe('BlockchainServer tests', () => {
         expect(response.body.index).toEqual(1)
     })
 
+    test('GET /wallets/:wallet - Should GET balance', async () => {
+        const response = await request(app)
+            .get('/wallets/abc');
+
+        expect(response.status).toEqual(200)
+        expect(response.body.balance).toEqual(10)
+    })
+
     test('POST /blocks/ - Should add block', async () => {
 
         const block = new Block({index: 1} as Block)
