@@ -1,6 +1,7 @@
 import TransactionInput from "./transactionInput";
 import TransactionType from "../transactionType";
 import Validation from "../validation";
+import TransactionOutput from "./transactionOutput";
 
 /**
  * Transaction Class
@@ -9,19 +10,17 @@ export default class Transaction{
     type: TransactionType;
     timestamp: number
     hash : string
-    to : string
-    txInput : TransactionInput
+    txInputs : TransactionInput[] | undefined
+    txOutputs : TransactionOutput[]
 
 
 
     constructor(tx?:Transaction) {
         this.type = tx?.type || TransactionType.REGULAR
-        this.to = tx?.to || "walletTo"
-        if(tx && tx.txInput){
-            this.txInput = new TransactionInput(tx.txInput)
-        }else{
-            this.txInput = new TransactionInput()
-        }
+        this.txOutputs = tx?.txOutputs || [new TransactionOutput()]
+        this.txInputs = tx?.txInputs || [new TransactionInput()]
+
+
         this.timestamp = tx?.timestamp || Date.now()
         this.hash = tx?.hash || this.getHash()
     }
@@ -30,14 +29,24 @@ export default class Transaction{
         return "abc"
     }
 
-    isValid() : Validation{
-        if(!this.to)
-            return new Validation(false,"Invalid mock transaction.")
-
-        if(!this.txInput.isValid().success)
+    isValid(difficulty:number, totalFees:number) : Validation{
+        if(this.timestamp < 1 || !this.hash || !difficulty || !totalFees)
             return new Validation(false,"Invalid mock transaction.")
 
         return new Validation()
+    }
+
+    static fromReward(txo: TransactionOutput) : Transaction{
+        const tx = new Transaction({
+            type: TransactionType.FEE,
+            txOutputs: [txo]
+        }as Transaction)
+
+
+        tx.txInputs = undefined
+        tx.hash = tx.getHash()
+        tx.txOutputs[0].tx = tx.hash
+        return tx
     }
 
 

@@ -62,7 +62,7 @@ export default class Block {
      * @param difficulty The blockchain current difficult
      * @returns Returns true if the block is valid
      */
-    isValid(previousHash : string, previousIndex : number, difficulty : number) : Validation {
+    isValid(previousHash : string, previousIndex : number, difficulty : number, feePerTx:number) : Validation {
 
 
         if (this.transactions && this.transactions.length) {
@@ -73,15 +73,15 @@ export default class Block {
             if (feeTxs.length > 1) {
                 return new Validation(false,"Too many fees.")
             }
-            if(feeTxs[0].to !== this.miner)
+            if(feeTxs[0].txOutputs.some(txo => txo.toAddress === this.miner))
                 return new Validation(false,"Invalid fee tx: different from miner.")
 
-
-            const validation = this.transactions.map(tx => tx.isValid())
-            const errors = validation.filter(v => !v.success).map(v => v.message)
-            if (errors.length > 0) {
-                return new Validation(false,"Invalid Block due to invalid tx: "+errors.reduce((a,b) => a+b))
-            }
+            const totalFees = feePerTx*this.transactions.filter(tx => tx.type !== TransactionType.FEE).length
+            const validations = this.transactions.map(tx => tx.isValid(difficulty,totalFees));
+            const errors = validations.filter(v => !v.success).map(v => v.message);
+            if (errors.length > 0)
+                return new Validation(false, "Invalid block due to invalid tx: " + errors.reduce((a, b) => a + b));
+            
 
         }
 
@@ -89,10 +89,11 @@ export default class Block {
 
         if(this.timestamp < 1) return new Validation(false,"Invalid Timestamp")
         if(previousHash !== this.previousHash) return new Validation(false,"Invalid PreviousHash")
-        if(!this.nonce || !this.miner) return new Validation(false,"No mined.")
+        if(this.nonce < 1 || !this.miner) return new Validation(false,"No mined.")
 
         const prefix = new Array(difficulty+1).join("0")
-        if(this.hash !== this.getHash() || !this.hash.startsWith(prefix)) return new Validation(false,"Invalid Hash")
+        if(this.hash !== this.getHash() || !this.hash.startsWith(prefix)) 
+            return new Validation(false,"Invalid Hash.")
 
 
         return new Validation();
