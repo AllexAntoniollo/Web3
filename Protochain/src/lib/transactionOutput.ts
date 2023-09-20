@@ -17,6 +17,10 @@ export default class TransactionOutput{
 
     }
 
+    /**
+     * Verify the validation
+     * @returns Return if is valid
+     */
     isValid() : Validation{
 
         if(this.amount < 1){
@@ -24,7 +28,10 @@ export default class TransactionOutput{
         }
         return new Validation()
     }
-
+    /**
+     * Create a hash
+     * @returns The hash
+     */
     getHash() : string{
         return SHA256(this.toAddress+this.amount).toString()
     }

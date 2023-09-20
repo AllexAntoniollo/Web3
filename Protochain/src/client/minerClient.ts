@@ -13,10 +13,18 @@ const BLOCKCHAIN_SERVER = process.env.BLOCKCHAIN_SERVER
 
 const minerWallet = new Wallet(process.env.MINER_WALLET)
 console.log("logged as "+ minerWallet.publicKey);
+console.log("\nStarted Mining...");
 
 
 let totalMined : number = 0
 
+
+/**
+ * 
+ * @param blockInfo The information of the block difficulty
+ * @param nextBlock The information of the fees
+ * @returns Miner reward transaction
+ */
 function getRewardTx(blockInfo : BlockInfo, nextBlock:Block) : Transaction | undefined{
 
     let amount = 0
@@ -44,13 +52,14 @@ function getRewardTx(blockInfo : BlockInfo, nextBlock:Block) : Transaction | und
     return Transaction.fromReward(txo)
 
 }
-
+/**
+ * This function is responsible to mine a block. 
+ * @returns A loop to mine a block
+ */
 async function mine() {
-    console.log("Getting next block info...");
     
     const {data} = await axios.get(`${BLOCKCHAIN_SERVER}blocks/next`)
     if (!data) {
-        console.log("No tx found. Waiting...");
 
         return setTimeout(() => {
             mine()
@@ -69,16 +78,18 @@ async function mine() {
     newBlock.miner = minerWallet.publicKey
     newBlock.hash = newBlock.getHash()
 
+    console.log("-------------------------------------");
     console.log("start mining block #"+blockInfo.index);
     newBlock.mine(blockInfo.difficulty,minerWallet.publicKey)
     console.log("block mined send to blockchain...");
 
     try {   
         await axios.post(`${BLOCKCHAIN_SERVER}blocks/`,newBlock)
-        console.log("block sent and accepted");
+        console.log("block sent and accepted.");
         totalMined++
-        console.log("Total mined blocks "+totalMined);
-        
+        console.log("Total mined blocks: "+totalMined);
+        console.log("-------------------------------------");
+
         
     } catch (error:any) {        
         console.error(error.response);

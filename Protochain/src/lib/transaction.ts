@@ -15,6 +15,10 @@ export default class Transaction {
     txInputs: TransactionInput[] | undefined;
     txOutputs: TransactionOutput[];
 
+    /**
+     * Creates a new Transaction
+     * @param tx 
+     */
     constructor(tx?: Transaction) {
         this.type = tx?.type || TransactionType.REGULAR;
         this.timestamp = tx?.timestamp || Date.now();
@@ -31,7 +35,10 @@ export default class Transaction {
 
         this.txOutputs.forEach((txo, index, arr) => arr[index].tx = this.hash);
     }
-
+    /**
+     * Get a hash
+     * @returns The hash
+     */
     getHash(): string {
         const from = this.txInputs && this.txInputs.length
             ? this.txInputs.map(txi => txi.signature).join(",")
@@ -43,7 +50,10 @@ export default class Transaction {
 
         return sha256(this.type + from + to + this.timestamp).toString();
     }
-
+    /**
+     * Get a fee
+     * @returns The fee
+     */
     getFee(): number {
         let inputSum: number = 0, outputSum: number = 0;
         if (this.txInputs && this.txInputs.length) {
@@ -57,7 +67,12 @@ export default class Transaction {
 
         return 0;
     }
-
+    /**
+     * Verify if a transaction is valid
+     * @param difficulty 
+     * @param totalFees 
+     * @returns 
+     */
     isValid(difficulty: number, totalFees: number): Validation {
         if (this.hash !== this.getHash())
             return new Validation(false, "Invalid hash.");
@@ -89,7 +104,11 @@ export default class Transaction {
 
         return new Validation();
     }
-
+    /**
+     * Create a fee transaction
+     * @param txo 
+     * @returns 
+     */
     static fromReward(txo: TransactionOutput): Transaction {
         const tx = new Transaction({
             type: TransactionType.FEE,

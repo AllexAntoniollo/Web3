@@ -33,7 +33,10 @@ export default class Block {
         this.miner = block?.miner || "";
         this.hash = block?.hash || this.getHash();
     }
-
+    /**
+     * Return the block hash
+     * @returns 
+     */
     getHash(): string {
         const txs = this.transactions && this.transactions.length
             ? this.transactions.map(tx => tx.hash).reduce((a, b) => a + b)
@@ -95,7 +98,11 @@ export default class Block {
 
         return new Validation();
     }
-
+    /**
+     * Information of the block
+     * @param blockInfo 
+     * @returns 
+     */
     static fromBlockInfo(blockInfo: BlockInfo): Block {
         const block = new Block();
         block.index = blockInfo.index;

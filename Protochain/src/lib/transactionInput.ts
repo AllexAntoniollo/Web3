@@ -53,7 +53,11 @@ export default class TransactionInput {
             .verify(hash,Buffer.from(this.signature,"hex"))
         return isValid ? new Validation() : new Validation(false,"Invalid transaction input signature.")
     }
-
+    /**
+     * 
+     * @param txo 
+     * @returns 
+     */
     static fromTxo(txo : TransactionOutput) : TransactionInput{
         return new TransactionInput({
             amount: txo.amount,

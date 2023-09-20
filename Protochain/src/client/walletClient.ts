@@ -4,7 +4,6 @@ import Wallet from "../lib/wallet";
 import readline from "readline"
 import axios from "axios";
 import Transaction from '../lib/transaction';
-import TransactionType from '../lib/transactionType';
 import TransactionInput from '../lib/transactionInput';
 import TransactionOutput from '../lib/transactionOutput';
 
@@ -18,6 +17,9 @@ const rl = readline.createInterface({
     output: process.stdout
 })
 
+/**
+ * Main Menu
+ */
 function menu(){
     setTimeout(() => {
         console.clear()
@@ -61,18 +63,25 @@ function menu(){
 
     }, 1000)
 }
-
+/**
+ * A menu to redirect to main menu
+ */
 function preMenu(){
     rl.question("Press any key to continue...", () => {
         menu()
     })
 }
-
+/**
+ * Logout the wallet
+ */
 function logout(){
     myWalletPriv = ""
     myWalletPub = ""
     menu()
 }
+/**
+ * Search a Transaction
+ */
 function searchTx(){
     console.clear()
     rl.question("Your tx hash: ",async (hash) => {
@@ -82,6 +91,9 @@ function searchTx(){
         
     })
 }
+/**
+ * Send a Transaction
+ */
 function sendTx(){
     console.clear()
     if(!myWalletPub){
@@ -116,13 +128,11 @@ function sendTx(){
 
             const txOutputs = [] as TransactionOutput[]
 
-            //Transação transferencia
             txOutputs.push(new TransactionOutput({
                 toAddress: toWallet,
                 amount
             }as TransactionOutput))
 
-            //Transação Troco
             const remainingBalance = balance-amount-fee
 
             txOutputs.push(new TransactionOutput({
@@ -140,8 +150,7 @@ function sendTx(){
             tx.hash = tx.getHash()
             tx.txOutputs.forEach((txo,index,arr) => arr[index].tx = tx.hash)
 
-            console.log(tx);
-            console.log("Remaining balance: "+remainingBalance);
+            console.log("\nRemaining balance: "+remainingBalance);
             
             
 
@@ -165,7 +174,9 @@ function sendTx(){
     
     preMenu()
 }
-
+/**
+ * Create a Wallet
+ */
 function createWallet(){
     console.clear()
     const wallet = new Wallet()
@@ -177,10 +188,12 @@ function createWallet(){
     
     preMenu()
 }
-
+/**
+ * Recover a Wallet
+ */
 function recoverWallet(){
     console.clear()
-    rl.question("What is you PrivateKey or WIF?",(wifOrPrivateKey) => {
+    rl.question("What is you PrivateKey or WIF? ",(wifOrPrivateKey) => {
         const wallet = new Wallet(wifOrPrivateKey)
         console.log("Your recovered wallet: ");
         console.log(wallet);
@@ -192,7 +205,9 @@ function recoverWallet(){
 
     })
 }
-
+/**
+ * Check the balance of an address
+ */
 async function getBalance(){
     console.clear()
     if(!myWalletPub){

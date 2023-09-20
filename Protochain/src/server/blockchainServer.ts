@@ -7,7 +7,6 @@ import Blockchain from "../lib/blockchain";
 import Block from "../lib/block";
 import Transaction from '../lib/transaction';
 import Wallet from '../lib/wallet';
-import TransactionOutput from '../lib/transactionOutput';
 
 /* c8 ignore next */
 const PORT : number = parseInt(`${process.env.BLOCKCHAIN_PORT || 3000}`)
@@ -23,7 +22,9 @@ app.use(Express.json())
 const wallet = new Wallet(process.env.BLOCKCHAIN_WALLET)
 
 const blockchain = new Blockchain(wallet.publicKey);
-
+/**
+ * Show the blockchain data
+ */
 app.get("/status", (req,res,next) => {
     res.json({
         mempool        : blockchain.mempool.length,
@@ -32,7 +33,9 @@ app.get("/status", (req,res,next) => {
         lastBlock      : blockchain.getLastBlock()
     })
 })
-
+/**
+ * Show the wallet data
+ */
 app.get("/wallets/:wallet", (req,res,next) => {
     const wallet = req.params.wallet
 
@@ -43,19 +46,21 @@ app.get("/wallets/:wallet", (req,res,next) => {
     return res.json({balance,fee,utxo})
 })
 
-
+/**
+ * Show the blockchain data
+ */
 app.get("/blocks/", (req,res,next) => {
     res.json(blockchain)
 })
-
-app.get("/blocks/", (req,res,next) => {
-    res.json(blockchain)
-})
-
+/**
+ * Show the next block data or null
+ */
 app.get("/blocks/next", (req,res,next) => {
     res.json(blockchain.getNextBlock())
 })
-
+/**
+ * Show a specified block
+ */
 app.get("/blocks/:indexOrHash", (req,res,next) => {
     let block
 
@@ -69,7 +74,21 @@ app.get("/blocks/:indexOrHash", (req,res,next) => {
     else
         return res.json(block)
 })
+/**
+ * Show a transaction or a mempool
+ */
+app.get("/transactions/:hash?", (req,res,next) =>{
 
+    if(req.params.hash){
+        res.json(blockchain.getTransaction(req.params.hash))
+    }else{
+        res.json({next: blockchain.mempool.slice(0,Blockchain.TX_PER_BLOCK), total: blockchain.mempool.length})
+    }
+
+})
+/**
+ * Add a block
+ */
 app.post("/blocks", (req,res,next) => {
     if(req.body.hash === undefined) return res.sendStatus(422)
 
@@ -81,15 +100,9 @@ app.post("/blocks", (req,res,next) => {
         res.status(400).json(validation)
     
 })
-app.get("/transactions/:hash?", (req,res,next) =>{
-
-    if(req.params.hash){
-        res.json(blockchain.getTransaction(req.params.hash))
-    }else{
-        res.json({next: blockchain.mempool.slice(0,Blockchain.TX_PER_BLOCK), total: blockchain.mempool.length})
-    }
-
-})
+/**
+ * Add a transaction
+ */
 app.post("/transactions", (req,res,next) => {
     if(req.body.hash === undefined) return res.sendStatus(422)
 

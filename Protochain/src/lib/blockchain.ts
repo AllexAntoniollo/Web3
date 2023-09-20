@@ -18,7 +18,10 @@ export default class Blockchain{
     nextIndex : number = 0
     mempool   : Transaction[]
 
-
+    /**
+     * Creates a new Blockchain
+     * @param miner 
+     */
     constructor(miner : string) {
         this.blocks = []
         this.mempool = []
@@ -27,7 +30,11 @@ export default class Blockchain{
         this.blocks.push(genesis)
         this.nextIndex++;
     }
-
+    /**
+     * Initialize a first block. 
+     * @param miner 
+     * @returns 
+     */
     createGenesis(miner : string) : Block{
         const amount = Blockchain.getRewardAmount(this.getDifficulty())
 
@@ -43,15 +50,24 @@ export default class Blockchain{
 
         return block
     }
-
+    /**
+     * Get the last block
+     * @returns 
+     */
     getLastBlock() : Block{
         return this.blocks[this.blocks.length-1];
     }
-
+    /**
+     * Get the current difficulty
+     */
     getDifficulty() : number{
         return Math.ceil(this.blocks.length/Blockchain.DIFFICULTY_FACTOR) + 1
     }
-
+    /**
+     * Get a transaction from hash
+     * @param hash 
+     * @returns 
+     */
     getTransaction(hash:string) : TransactionSearch{
         const mempoolIndex = this.mempool.findIndex(tx => tx.hash === hash)
         if(mempoolIndex !== -1)
@@ -73,7 +89,11 @@ export default class Blockchain{
         } as TransactionSearch
 
     }
-
+    /**
+     * Add a transaction
+     * @param transaction 
+     * @returns 
+     */
     addTransaction(transaction : Transaction) : Validation{
         if(transaction.txInputs && transaction.txInputs.length){
             const from = transaction.txInputs[0].fromAddress
@@ -107,7 +127,11 @@ export default class Blockchain{
         this.mempool.push(transaction)
         return new Validation(true,transaction.hash)
     }
-
+    /**
+     * Add a block
+     * @param block 
+     * @returns 
+     */
     addBlock(block : Block) : Validation{
         const nextBlock = this.getNextBlock()
         if(!nextBlock){
@@ -128,7 +152,10 @@ export default class Blockchain{
         this.nextIndex++;
         return new Validation(true,block.hash);
     }
-
+    /**
+     * Verify the blockchain
+     * @returns 
+     */
     isValid() : Validation{
         for (let index = this.blocks.length-1; index > 0; index--) {
             const currentBlock = this.blocks[index];
@@ -139,15 +166,26 @@ export default class Blockchain{
         }
         return new Validation()
     }
-
+    /**
+     * Returns a block from hash
+     * @param hash 
+     * @returns 
+     */
     getBlock(hash : string) : Block | undefined{
         return this.blocks.find(b => b.hash === hash)
     }
-
+    /**
+     * Returns a default fee of the transaction
+     * @returns 
+     */
     getFeePerTx() : number{
         return 1
     }
-
+    /**
+     * 
+     * @param wallet 
+     * @returns 
+     */
     getTxInputs(wallet : string) : (TransactionInput | undefined)[] {
         return this.blocks
             .map(b => b.transactions)
@@ -157,6 +195,11 @@ export default class Blockchain{
             .flat()
             .filter(txi => txi!.fromAddress === wallet)
     }
+    /**
+     * 
+     * @param wallet 
+     * @returns 
+     */
     getTxOutputs(wallet : string) : TransactionOutput[]{
         return this.blocks
         .map(b => b.transactions)
@@ -166,7 +209,11 @@ export default class Blockchain{
         .flat()
         .filter(txo => txo!.toAddress === wallet)
     }
-
+    /**
+     * Return the available UTXOs
+     * @param wallet 
+     * @returns 
+     */
     getUtxo(wallet : string) : TransactionOutput[]{
         const txIns = this.getTxInputs(wallet)
         const txOuts = this.getTxOutputs(wallet)
@@ -181,7 +228,10 @@ export default class Blockchain{
         return txOuts
 
     }
-
+    /**
+     * Return next block info
+     * @returns 
+     */
     getNextBlock() : BlockInfo | null{
         if(!this.mempool || !this.mempool.length)
             return null
@@ -196,7 +246,11 @@ export default class Blockchain{
             transactions,difficulty,previousHash,index,feePerTx,maxDifficulty
         } as BlockInfo;
     }
-
+    /**
+     * Return the available balance
+     * @param wallet 
+     * @returns 
+     */
     getBalance(wallet : string) : number{
         const utxo = this.getUtxo(wallet)
         if(!utxo || !utxo.length) return 0
@@ -204,7 +258,11 @@ export default class Blockchain{
         return utxo.reduce((a,b) => a+b.amount,0)
 
     } 
-    
+    /**
+     * Reward for mining a block
+     * @param difficulty 
+     * @returns 
+     */
     static getRewardAmount(difficulty:number) : number{
         return (64-difficulty)*10
     }
