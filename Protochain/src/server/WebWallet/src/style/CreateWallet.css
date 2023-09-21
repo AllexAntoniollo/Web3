@@ -1,0 +1,34 @@
+.um{
+    margin-right: 200px;
+    margin-top: 30px;
+    font-size: 10px;
+    color: white;
+}
+
+.dois{
+    margin-right: 200px;
+    margin-top: 50px;
+    font-size: 10px;
+    color: white;
+}
+
+.voltar{
+    color: white;
+    font-size: 22px;
+    margin-left: 20px;
+}
+
+.titul{
+  font-size: 10px;
+  font-family: "Inter", sans-serif;
+  border-bottom: 1px solid white;
+  color: white;
+  padding-bottom: 8px;
+  text-align: center;
+  display: flex;
+}
+
+
+.titul h1{
+    margin-left: 90px;
+}
