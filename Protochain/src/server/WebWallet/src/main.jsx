@@ -8,6 +8,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from './routes/home.jsx';
 import CreateWallet from './routes/CreateWallet.jsx';
 import RecoverWallet from './routes/RecoverWallet.jsx';
+import Balance from './routes/Balance.jsx';
+import SendTx from './routes/SendTx.jsx';
+import GetTx from './routes/GetTx.jsx'
 
 const router = createBrowserRouter([
   {
@@ -23,8 +26,20 @@ const router = createBrowserRouter([
       element: <CreateWallet />
     },
     {
-      path: "RecoverWallet",
+      path: "/RecoverWallet",
       element: <RecoverWallet />
+    },
+    {
+      path: "/Balance",
+      element: <Balance />
+    },
+    {
+      path: "/SendTx",
+      element: <SendTx />
+    },
+    {
+      path: "/GetTx",
+      element: <GetTx />
     }
   ], 
 

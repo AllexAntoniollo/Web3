@@ -22,7 +22,7 @@ const recoverWallet = ()=> {
         </div>
 
         <div className='btn'>
-            <button style={{width:'100px'}}>Enviar</button>
+            <button style={{width:'100px'}}>Recuperar</button>
         </div>
  
     </div>

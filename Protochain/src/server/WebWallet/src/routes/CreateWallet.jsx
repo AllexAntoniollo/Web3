@@ -24,7 +24,7 @@ const createWallet = ()=> {
         </div>
 
         <div className='btn'>
-            <button style={{width:'100px'}}>Enviar</button>
+            <button style={{width:'100px'}}>Criar</button>
         </div>
  
     </div>
