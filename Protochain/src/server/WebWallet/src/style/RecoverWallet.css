@@ -1,0 +1,45 @@
+.titu{
+    font-size: 10px;
+    font-family: "Inter", sans-serif;
+    border-bottom: 1px solid white;
+    color: white;
+    padding-bottom: 8px;
+    text-align: center;
+    display: flex;
+}
+  
+  
+.titu h1{
+      margin-left: 80px;
+}
+
+.volta{
+    color: white;
+    font-size: 22px;
+    margin-left: 20px;
+}
+
+.input{
+    margin-top: 5px;
+    color: black;
+}
+
+.input input{
+    border-radius: 8px;
+    border: 2px solid white;
+    width: 80%;
+    outline: 0;
+    padding: 7px 2%;
+    opacity: 0.9;
+    margin-top: 5px;
+}
+
+.bot{
+    margin-top: 15px;
+}
+
+.p{
+    color: white;
+    margin-top: 20px;
+}
+
