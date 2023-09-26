@@ -5,11 +5,11 @@ import { BiArrowBack } from "react-icons/bi";
 
 const GetTx = ()=> {
     return(
-        <div class="caixa">
+        <div className="caixa">
 
 
-        <div class="ti">  
-            <Link class="volta" to="/"><BiArrowBack/></Link>
+        <div className="ti">  
+            <Link className="volta" to="/"><BiArrowBack/></Link>
             <h1>Consultar Transação</h1>
         </div>
 

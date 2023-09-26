@@ -11,7 +11,7 @@
     "blockchain": "ts-node ./src/server/blockchainServer.ts --run",
     "miner": "ts-node ./src/client/minerClient.ts",
     "wallet": "ts-node ./src/client/walletClient.ts",
-    "webWallet": "vite ./src/server/WebWallet"
+    "webWallet": "react-scripts start ./src/server/webwallet"
   },
   "keywords": [],
   "author": "",

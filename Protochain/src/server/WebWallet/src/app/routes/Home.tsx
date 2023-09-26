@@ -11,49 +11,48 @@ const [val, setVal] = useState('')
 
     return(
         
-        <div class="caixa">
+        <div className="caixa">
 
-        <div class="titulo">
+        <div className="titulo">
             <h1>Carteira</h1>
         </div>
 
-        <div class="colunas">
+        <div className="colunas">
 
-            <div class="coluna">
-                <div class="radio-button">
+            <div className="coluna">
+                <div className="radio-button">
                     <input type="radio" name="CreateWallet" value='CreateWallet' onChange={(e)=> {setVal(e.target.value)}} checked = {val === 'CreateWallet'}></input>
-                    <span for="opcao1">Criar Carteira</span>
+                    <span>Criar Carteira</span>
                 </div>
-                <div class="radio-button">
+                <div className="radio-button">
                     <input type="radio" name="RecoverWallet" value='RecoverWallet' onChange={(e)=> {setVal(e.target.value)}} checked = {val === 'RecoverWallet'}></input>
-                    <span for="opcao2">Recuperar Carteira</span>
+                    <span>Recuperar Carteira</span>
                 </div>
-                <div class="radio-button">
+                <div className="radio-button">
                     <input type="radio" name="Balance" value='Balance' onChange={(e)=> {setVal(e.target.value)}} checked = {val === 'Balance'}></input>
-                    <span for="opcao3">Ver Balanço</span> 
+                    <span>Ver Balanço</span> 
                 </div>
             </div>
 
             
-            <div class="coluna">
-                <div class="radio-button">
+            <div className="coluna">
+                <div className="radio-button">
                     <input type="radio" name="SendTx" value='SendTx' onChange={(e)=> {setVal(e.target.value)}} checked = {val === 'SendTx'} ></input>
-                    <span for="opcao4">Enviar Transação</span>
+                    <span >Enviar Transação</span>
                 </div>
-                <div class="radio-button">
+                <div className="radio-button">
                     <input type="radio" name="GetTx" value='GetTx' onChange={(e)=> {setVal(e.target.value)}} checked = {val === 'GetTx'}></input>
-                    <span for="opcao5">Consultar Transação</span>
+                    <span>Consultar Transação</span>
                 </div>
-                <div class="radio-button">
+                <div className="radio-button">
                     <input type="radio" name="Logout" value='Logout' onChange={(e)=> {setVal(e.target.value)}} checked = {val === 'Logout'}></input>
-                    <span for="opcao6">Logout</span>
+                    <span>Logout</span>
                 </div>
             </div>
         </div>
                 
-        <div class="btn">
+        <div className="btn">
             <Link onClick={()=> { 
-                if(val === 'Logout') window.open('', '_self', '').close() 
             }} to={"/"+val}><button>Confirmar</button></Link>
         </div>
 

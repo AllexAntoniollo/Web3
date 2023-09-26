@@ -5,11 +5,11 @@ import { BiArrowBack } from "react-icons/bi";
 
 const SendTx = ()=> {
     return(
-        <div class="caixa">
+        <div className="caixa">
 
 
-        <div class="t1">  
-            <Link class="volta" to="/"><BiArrowBack/></Link>
+        <div className="t1">  
+            <Link className="volta" to="/"><BiArrowBack/></Link>
             <h1>Enviar Transação</h1>
         </div>
         
@@ -26,7 +26,7 @@ const SendTx = ()=> {
         </div>
 
         <div className='input'>
-            <input type="number" min="1" placeholder='Digite sua chave privada ou WIF...'/>
+            <input type="number" min="1" placeholder='Digite a quantidade para enviar...'/>
         </div>
 
         <div className='btn'>

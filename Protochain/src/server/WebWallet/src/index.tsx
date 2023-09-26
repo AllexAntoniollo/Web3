@@ -1,16 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+import {App} from './app/App'
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Home from './routes/home.jsx';
-import CreateWallet from './routes/CreateWallet.jsx';
-import RecoverWallet from './routes/RecoverWallet.jsx';
-import Balance from './routes/Balance.jsx';
-import SendTx from './routes/SendTx.jsx';
-import GetTx from './routes/GetTx.jsx'
+import Home from './app/routes/Home';
+import CreateWallet from './app/routes/CreateWallet';
+import RecoverWallet from './app/routes/RecoverWallet';
+import Balance from './app/routes/Balance';
+import SendTx from './app/routes/SendTx';
+import GetTx from './app/routes/GetTx'
 
 const router = createBrowserRouter([
   {
@@ -47,7 +46,7 @@ const router = createBrowserRouter([
 ]);
 
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>,

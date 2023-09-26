@@ -5,11 +5,11 @@ import { BiArrowBack } from "react-icons/bi";
 
 const createWallet = ()=> {
     return(
-        <div class="caixa">
+        <div className="caixa">
 
 
-        <div class="titul">  
-            <Link class="volta" to="/"><BiArrowBack/></Link>
+        <div className="titul">  
+            <Link className="volta" to="/"><BiArrowBack/></Link>
             <h1>Criar Carteira</h1>
         </div>
 

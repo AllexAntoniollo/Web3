@@ -5,11 +5,11 @@ import { BiArrowBack } from "react-icons/bi";
 
 const recoverWallet = ()=> {
     return(
-        <div class="caixa">
+        <div className="caixa">
 
 
-        <div class="titu">  
-            <Link class="voltar" to="/"><BiArrowBack/></Link>
+        <div className="titu">  
+            <Link className="voltar" to="/"><BiArrowBack/></Link>
             <h1>Restaurar Carteira</h1>
         </div>
 
