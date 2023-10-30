@@ -1,0 +1,263 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  
+
+  #container{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-image: url(assets/bg-desktop.jpg);
+    background-size: cover;
+  }
+  
+  
+  .quadrado{
+    position: fixed;
+    bottom: 0;
+  
+  }
+  
+  #canvas3d{
+    position: fixed;
+    right: 400px;
+  }
+  
+  .centro {
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+  }
+  
+  
+  
+  .caixa {
+    z-index: 999;
+    width: 400px; /* Largura da caixa */
+    height: 250px; /* Altura da caixa */
+    border: 2px solid rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.134);
+    border-radius: 17px;
+    padding: 20px;
+    text-align: center; /* Deixa os btn no centro */
+  }
+  
+  
+  .colunas {
+    display: flex;
+    margin-top: 15px;
+    justify-content: space-between;
+    height: 60%; /* Ocupar porcentagem da caixa */
+  }
+  
+  
+  .coluna {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  
+  .radio-button {
+    display: flex;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+  }
+  
+  
+  input[type="radio"] {
+    user-select:none;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  span {
+    color: white;
+    margin-right: 10px;
+    font-size: 15px;
+  }
+  
+  
+  .btn{
+    margin-top: 25px;
+  }
+  
+  
+  .btn button{
+    cursor: pointer;
+    border-radius: 10px;
+    border-color: white;
+    padding: 7px 0;
+    width: 70%;
+    font-size: 15px;
+    background-color: transparent;
+    border-width: 2px;
+    color: white;
+    
+  }
+  
+  .btn button:hover{
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    color: rgb(0, 0, 0);
+    transition: 0.25s;
+    border-color: black;
+    font-family: "Inter", sans-serif;
+    background-color: rgb(255, 255, 255);
+  }
+  
+  
+  .titulo{
+    font-size: 10px;
+    font-family: "Inter", sans-serif;
+    border-bottom: 1px solid white;
+    color: white;
+    padding-bottom: 8px;
+    text-align: center;
+  }
+
+  .voltar{
+    color: white;
+    font-size: 22px;
+    margin-left: 20px;
+}
+
+.t{
+  font-size: 10px;
+  font-family: "Inter", sans-serif;
+  border-bottom: 1px solid white;
+  color: white;
+  padding-bottom: 8px;
+  text-align: center;
+  display: flex;
+}
+
+
+.t h1{
+    margin-left: 115px;
+}
+.um{
+    margin-right: 200px;
+    margin-top: 20px;
+    font-size: 10px;
+    color: white;
+}
+
+.dois{
+    margin-right: 200px;
+    margin-top: 50px;
+    font-size: 10px;
+    color: white;
+}
+
+.voltar{
+    color: white;
+    font-size: 22px;
+    margin-left: 20px;
+}
+
+.titul{
+  font-size: 10px;
+  font-family: "Inter", sans-serif;
+  border-bottom: 1px solid white;
+  color: white;
+  padding-bottom: 8px;
+  text-align: center;
+  display: flex;
+}
+
+
+.titul h1{
+    margin-left: 90px;
+}
+.ti{
+    font-size: 10px;
+    font-family: "Inter", sans-serif;
+    border-bottom: 1px solid white;
+    color: white;
+    padding-bottom: 8px;
+    text-align: center;
+    display: flex;
+  }
+  
+  
+  .ti h1{
+      margin-left: 60px;
+  }
+  .titu{
+    font-size: 10px;
+    font-family: "Inter", sans-serif;
+    border-bottom: 1px solid white;
+    color: white;
+    padding-bottom: 8px;
+    text-align: center;
+    display: flex;
+}
+  
+  
+.titu h1{
+      margin-left: 80px;
+}
+
+.volta{
+    color: white;
+    font-size: 22px;
+    margin-left: 20px;
+}
+
+.input{
+    margin-top: 5px;
+    color: black;
+}
+
+.input input{
+    border-radius: 8px;
+    border: 2px solid white;
+    width: 80%;
+    outline: 0;
+    padding: 7px 2%;
+    opacity: 0.9;
+    margin-top: 5px;
+}
+
+.bot{
+    margin-top: 15px;
+}
+
+.p{
+    color: white;
+    margin-top: 20px;
+}
+
+.t1{
+    font-size: 10px;
+    font-family: "Inter", sans-serif;
+    border-bottom: 1px solid white;
+    color: white;
+    padding-bottom: 8px;
+    text-align: center;
+    display: flex;
+  }
+  
+  
+  .t1 h1{
+      margin-left: 75px;
+  }
+  
+  
+  @media only screen and (max-width: 1300px) {
+    #canvas3d{
+        right: 280px;
+    }
+  }
+  
+  @media only screen and (max-width: 1000px) {
+    #canvas3d{
+        display: none;
+    }
+    .centro {
+        left: 50%;
+    }
+  }

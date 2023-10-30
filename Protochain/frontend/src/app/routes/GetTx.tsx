@@ -1,5 +1,3 @@
-import React from 'react'
-import '../style/GetTx.css'
 import { Link } from 'react-router-dom'
 import { BiArrowBack } from "react-icons/bi";
 

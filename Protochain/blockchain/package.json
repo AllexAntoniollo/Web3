@@ -14,7 +14,7 @@
     "webWallet": "react-scripts start ./src/server/webwallet"
   },
   "keywords": [],
-  "author": "",
+  "author": "Allex",
   "license": "ISC",
   "devDependencies": {
     "@types/crypto-js": "^4.1.1",
